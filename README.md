@@ -9,7 +9,7 @@ Les notes de cours suivantes sont pour le cours GLO-2000. Seulement les informat
 **H: Host**\
 **WAN: Wide area network**\
 **LAN: Local Area Network**\
-**G: Gateway**\
+**G: Gateway**
 
 Plusieurs réseaux doivent être connectés par WAN. Ils ne sont pas directement connectés, puisqu'ils doient avoir des équipements spéciaux, plus spécifiquement des G (autrement dit, des **Gateways**). Plusieurs WAN sont connnectés par un gateway. C'est une sorte de passerelle entre différents réseaux. Ces réseaux peuvent être des **LAN**s.
 
