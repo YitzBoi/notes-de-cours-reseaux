@@ -67,7 +67,7 @@ Sans fil ne veut pas nécessairement dire mobile. Les utilisateurs sont mobiles,
     - Peut être privé ou public
     - Pas d'éléments de commutation (routage) -> simple
     - Norme spéciale IEEE-802.6
-- Réseaux longue distance (WAN)
+- Réseaux longue distance (WAN)\
     **n: nombre de noeuds**\
     **m: nombre de liaisons**\
     **m = f(n)**
