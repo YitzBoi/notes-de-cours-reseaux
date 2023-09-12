@@ -47,7 +47,7 @@ De façon générale. un réseau de communications est un ensemble d'équipement
             - Une machine ne reçoit pas forcément tous les paquets des autres.
             - __En général__, les réseaux de grande taille utilisent le point à point.
     - La taille (étendue) du réseau:
-        - ![Schéma général de réseau](/taille_reseau.png)
+    ![Schéma général de réseau](/taille_reseau.png)
         - Réseau personnel **PAN**.
         - Réseau locaux.
             - Étendue = une salle, un immeuble.
