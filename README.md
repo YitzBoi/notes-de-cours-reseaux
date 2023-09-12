@@ -22,3 +22,11 @@ Soit le noeud 2 reçoit de l'information du noeud 1. S'il y a un problème, il y
 De façon générale. un réseau de communications est un ensemble d'équipements de télécommunications reliés entre eux (d'une certaine façon), permettant de véhiculer des données, de la voix, des images, … entre utilisateurs géographiquement éloignés (de quelques dizaines de mètres à plusieurs milliers de kilomètres).
 
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](/schema_general.png)
+
+### Caractérisation des liaisons
+- Selon le nombre d'équipements
+    - Liaisons point-à-point/peer to peer
+    - Liaison multipoint (sous réseau de communication, réseau local)
+- Selon le mode d'exploitation
+    - Liasion unidirectionnelle (simplex, exemple: la radio traditionelle)
+    - Liaison bi-directionnelle en alternance (half-duplex, exemple: WiFi)
