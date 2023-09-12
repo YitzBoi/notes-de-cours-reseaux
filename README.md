@@ -60,7 +60,7 @@ De façon générale. un réseau de communications est un ensemble d'équipement
             - Access point ou Ethernet.
 
 **Remarque**\
-Sans fil ne veut pas nécessairement dire mobile. Les utilisateurs sont mobiles, mais pas l'équipement.
+> Sans fil ne veut pas nécessairement dire mobile. Les utilisateurs sont mobiles, mais pas l'équipement.
 
 - Réseaux métropolitains (MAN)
     - Étendue = une ville
