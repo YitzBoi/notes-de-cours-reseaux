@@ -59,7 +59,7 @@ De façon générale. un réseau de communications est un ensemble d'équipement
             - Problm̀e de partage du canal.
             - Access point ou Ethernet.
 
-**Remarque**\
+**Remarque**
 > Sans fil ne veut pas nécessairement dire mobile. Les utilisateurs sont mobiles, mais pas l'équipement.
 
 - Réseaux métropolitains (MAN)
