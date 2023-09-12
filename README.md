@@ -10,7 +10,8 @@ Les notes de cours suivantes sont pour le cours GLO-2000. Seulement les informat
 **WAN: Wide area network**\
 **LAN: Local Area Network**\
 **G: Gateway**\
-**PAN: Personal Area Network**
+**PAN: Personal Area Network**\
+**MAN: Réseaux métropolitains**
 
 ### Schéma
 
@@ -47,14 +48,40 @@ De façon générale. un réseau de communications est un ensemble d'équipement
         - Le point à point: un canal est partagé par deux machines:
             - Un paquet peut passer par plusieurs machines intermédiaires avant d'atteindre sa destination (besoin de routage).
             - Une machine ne reçoit pas forcément tous les paquets des autres.
-            - __En général__, les réseaux de grande taille utilisent le point à point.
+            - **En général**, les réseaux de grande taille utilisent le point à point.
     - La taille (étendue) du réseau:
     ![Schéma général de réseau](/taille_reseau.png)
-        - Réseau personnel **PAN**.
-        - Réseau locaux.
+        - Réseau personnel **PAN**
+        - Réseau locaux:
             - Étendue = une salle, un immeuble.
             - Topologie simple: Bus (exemple: Ethernet = norme IEEE 802.3) ou anneau (exemple: anneau à jeton = norme 802.5).
-            - Généralement privés
-            - Problm̀e de partage du canal
-            - Access point ou Ethernet
+            - Généralement privés.
+            - Problm̀e de partage du canal.
+            - Access point ou Ethernet.
+
+**Remarque**\
+Sans fil ne veut pas nécessairement dire mobile. Les utilisateurs sont mobiles, mais pas l'équipement.
+
+- Réseaux métropolitains (MAN)
+    - Étendue = une ville
+    - Peut être privé ou public
+    - Pas d'éléments de commutation (routage) -> simple
+    - Norme spéciale IEEE-802.6
+- Réseaux longue distance (WAN)
+    **n: nombre de noeuds**\
+    **m: nombre de liaisons**\
+    **m = f(n)**
+    - Étendue = une région, un continent.
+    - Sous-réseau de commutation: Ensemble de commutateurs reliés entre eux.
+    - Un commutateur (ordinateur): ordinateur spécialisé qui permet d'acheminer des paquets.
+    - Quelques topologies possibles d'un sous réseau:
+        - Étoile (m = n-1, min = 2).
+        - Anneau (m = n, min = 3).
+        - Arbre (m = n-1, min = 2).
+        - Maillage régulier (m = n * (n-1) / 2, min = 2).
+        - Anneau-interconnecté (m = n+1, min = 5).
+        - Maillage irrégulier (n-1 <= m <= n * (n-1) / 2)
+- Interréseaux
+    - Ensemble de réseaux interconnectés au moyen de machines appelées passerelles (gateways)
+    > Ne pas confondre: internet et Internet (le bon est I majuscule)
 
