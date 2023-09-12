@@ -1,6 +1,6 @@
 # Réseaux pour l'ingénierie
 
-## Introduction
+## Pre-read
 
 ### Schéma
 
@@ -15,4 +15,10 @@ LAN1 + H1   ->  WAN1 + noeuds qui échangent des informations -> **GATEWAY** <- 
 
 Soit le noeud 2 reçoit de l'information du noeud 1. S'il y a un problème, il y a soit une retransmission soit faire des calculs. Sinon, le noeud 2 renvoit de l'information confirmant le succès de la transmission du noeud 1.
 
-### Plan de cours
+## Chapitre 1: Introduction
+
+### Définition d'un réseau
+
+De façon générale. un réseau de communications est un ensemble d'équipements de télécommunications reliés entre eux (d'une certaine façon), permettant de véhiculer des données, de la voix, des images, … entre utilisateurs géographiquement éloignés (de quelques dizaines de mètres à plusieurs milliers de kilomètres).
+
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](/schema_general.png)
