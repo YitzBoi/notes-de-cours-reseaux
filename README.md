@@ -1,5 +1,22 @@
 # Réseaux pour l'ingénierie
 
+##### Table des matières
+
+[Pre-read](#pre-read)\
+[Équations](#équations)\
+[Mots clés](#mots-clés)\
+[Schéma](#schéma)
+- [Chapitre 1: Introduction](#chapitre-1-introduction)
+    - [Définition d'un réseau](#définition-dun-réseau)
+    - [Caractérisation des liaisons](#caractérisation-des-liaisons)
+    - [Caractristiques physiques des réseaux](#caractristiques-physiques-des-réseaux)
+    - [Architectures logicielles](#architectures-logicielles)
+    - [Types de services](#types-de-services)
+    - [Modèles de référence et encapsulation](#modèles-de-référence-et-encapsulation)
+    - [Architecture TCP/IP](#architecture-tcpip)
+    - [Encapsulation](#encapsulation)
+- [Chapitre 2: Couche physique](#chapitre-2-couche-physique)
+
 ## Pre-read
 
 Les notes de cours suivantes sont pour le cours GLO-2000. Seulement les informations pertinentes à l'examen sont inscrites.
@@ -271,6 +288,8 @@ des protocoles de communication différents et incompatibles.
 ### Encapsulation
 - Au niveau liaison
     ![](/images/ch1/entetetcpip.png)
+    - Trame: Adresse physique (MAC)
+    - Paquet: Adresse réseau/logique (IP)
 
 ## Chapitre 2: Couche physique
 ...
