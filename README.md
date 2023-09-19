@@ -32,7 +32,7 @@ Soit le noeud 2 reçoit de l'information du noeud 1. S'il y a un problème, il y
 
 De façon générale. un réseau de communications est un ensemble d'équipements de télécommunications reliés entre eux (d'une certaine façon), permettant de véhiculer des données, de la voix, des images, … entre utilisateurs géographiquement éloignés (de quelques dizaines de mètres à plusieurs milliers de kilomètres).
 
-![Schéma général de réseau](/schema_general.png)
+![Schéma général de réseau](/images/ch1/schema_general.png)
 
 ### Caractérisation des liaisons
 - Selon le nombre d'équipements
@@ -55,7 +55,7 @@ De façon générale. un réseau de communications est un ensemble d'équipement
             - Une machine ne reçoit pas forcément tous les paquets des autres.
             - **En général**, les réseaux de grande taille utilisent le point à point.
     - La taille (étendue) du réseau:
-    ![Schéma général de réseau](/taille_reseau.png)
+    ![Schéma général de réseau](/images/ch1/taille_reseau.png)
         - Réseau personnel **PAN**
         - Réseau locaux:
             - Étendue = une salle, un immeuble.
@@ -132,7 +132,7 @@ couche.
 
 |||
 | ------------- | ------------- |
-| ![](/img41.png)  | ![](/img42.png) |
+| ![](/images/ch1/img41.png)  | ![](/images/ch1/img42.png) |
 
 
 
@@ -140,7 +140,7 @@ Il est important de comprendre la différence entre la **communication virtuelle
 - Les processus pairs de la couche N conçoivent leur communication de façon horizontale grâce au protocole de la couche N ➔ une communication virtuelle.
 - La communication effective se fait avec les couches inférieures par l’interface.
 
-![](/img43.png)
+![](/images/ch1/img43.png)
 
 - Couche 4: Encapsulation d'un **header** (entête) et du message de la couche 5.
 - Couche 3: découpage de l'information en deux différents messages
@@ -209,7 +209,7 @@ OSI.
 - Élaboré par ISO et comporte 7
 couches.
 
-![](/OSI.png)
+![](/images/ch1/OSI.png)
 
 - Couche physique: transmission de bits sur un canal de communication.
     - Cette couche spécifie les caractéristiques physiques propres à la transmission du signal.
@@ -255,7 +255,7 @@ couches.
     servent directement l’utilisateur final en fournissant un ensemble de services standards : messagerie électronique, transfert de fichiers, etc.
     - Exemples de protocoles: FTP (File Transfer Protocol), SMTP (Simple Mail Transfer Protocol), SNMP (Simple Network Management Protocol), etc.
 
-![](/OSI2.png)
+![](/images/ch1/OSI2.png)
 
 ### Architecture TCP/IP
 
@@ -265,12 +265,12 @@ des protocoles de communication différents et incompatibles.
 
 > IMPORTANT! La couche de présentation et la couche de session sont fusionnées dans la couche application pour TCP/IP. Elles ne sont donc pas présentes dans le modèle.
 
-![](TCPIP2.png)
-![](TCPIP.png)
+![](/images/ch1/TCPIP2.png)
+![](/images/ch1/TCPIP.png)
 
 ### Encapsulation
 - Au niveau liaison
-    ![](entetetcpip.png)
+    ![](/images/ch1/entetetcpip.png)
 
 ## Chapitre 2: Couche physique
 ...
