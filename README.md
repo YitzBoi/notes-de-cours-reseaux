@@ -21,6 +21,10 @@
     - [Protocoles](#protocoles)
         - [Protocole Ethernet II](#protocole-ethernet-ii)
         - [Protocole IP](#protocole-ip)
+        - [Protocole ARP](#protocole-arp)
+        - [Protocole TTL: Time to live](#protocole-ttl-time-to-live)
+        - [Protocole ICMP](#protocole-icmp)
+        - [Protocole DNS](#protocole-dns)
 
 ## Pre-read
 
@@ -368,3 +372,5 @@ des protocoles de communication différents et incompatibles.
 - Utile pour ne pas avoir à retenir les adresses IP des sites web.
 - Idée: Associer une adresse IP malicieuse à un nom de domaine qui ne nous appartient pas.
     - Fonctionnement: Une faille du protocole DNS permet de faire croire à un routeur/serveur que l'adresse IP associée à un nom de domaine stock dans son cache a changé.
+
+![Crédit: GeeksforGeeks](/images/pratique/dnsquerymessage.png)
