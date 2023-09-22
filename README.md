@@ -6,16 +6,21 @@
 [Équations](#équations)\
 [Mots clés](#mots-clés)\
 [Schéma](#schéma)
-- [Chapitre 1: Introduction](#chapitre-1-introduction)
-    - [Définition d'un réseau](#définition-dun-réseau)
-    - [Caractérisation des liaisons](#caractérisation-des-liaisons)
-    - [Caractristiques physiques des réseaux](#caractristiques-physiques-des-réseaux)
-    - [Architectures logicielles](#architectures-logicielles)
-    - [Types de services](#types-de-services)
-    - [Modèles de référence et encapsulation](#modèles-de-référence-et-encapsulation)
-    - [Architecture TCP/IP](#architecture-tcpip)
-    - [Encapsulation](#encapsulation)
-- [Chapitre 2: Couche physique](#chapitre-2-couche-physique)
+- [Section Théorique](#section-théorique)
+    - [Chapitre 1: Introduction](#chapitre-1-introduction)
+        - [Définition d'un réseau](#définition-dun-réseau)
+        - [Caractérisation des liaisons](#caractérisation-des-liaisons)
+        - [Caractristiques physiques des réseaux](#caractristiques-physiques-des-réseaux)
+        - [Architectures logicielles](#architectures-logicielles)
+        - [Types de services](#types-de-services)
+        - [Modèles de référence et encapsulation](#modèles-de-référence-et-encapsulation)
+        - [Architecture TCP/IP](#architecture-tcpip)
+        - [Encapsulation](#encapsulation)
+    - [Chapitre 2: Couche physique](#chapitre-2-couche-physique)
+- [Section Pratique](#section-pratique)
+    - [Protocoles](#protocoles)
+        - [Protocole Ethernet II](#protocole-ethernet-ii)
+        - [Protocole IP](#protocole-ip)
 
 ## Pre-read
 
@@ -43,6 +48,7 @@ LAN1 + H1   ->  WAN1 + noeuds qui échangent des informations -> **GATEWAY** <- 
 
 Soit le noeud 2 reçoit de l'information du noeud 1. S'il y a un problème, il y a soit une retransmission soit faire des calculs. Sinon, le noeud 2 renvoit de l'information confirmant le succès de la transmission du noeud 1.
 
+# Section Théorique
 ## Chapitre 1: Introduction
 
 ### Définition d'un réseau
@@ -293,3 +299,72 @@ des protocoles de communication différents et incompatibles.
 
 ## Chapitre 2: Couche physique
 ...
+
+# Section Pratique
+
+## Protocoles
+
+### Protocole Ethernet II
+- Communication sur un réseau local (peer-to-peer)
+
+![](/images/pratique/EN-ethernet-frame-structure6.jpg)
+
+### Protocole IP
+- Pour communiquer sur Internet
+
+![](/images/pratique/IPFrame.png)
+
+### Protocole ARP
+- Pour trouver l'adresse MAC d'un hôte sur le réseau local
+- Traduction d'adresse IP vers une adresse MAC
+
+![](/images/pratique/ARPFrame.jpg)
+
+- Afin d'êtr ecorrectement acheminée, une trame Ethernet II doit forcément avoir un couple IP-MAC correct dans les champs de destination
+
+- Pour ne pas faire de requête ARP à chaque échange, chaque appareil garde une table ARP contenant le spaires d'adresses de leurs voisins. Cette table s'invalide automatiquement avec le temps.
+
+- Vulnérabilité ARP
+    - Man in the middle: attaque qui consiste à intercepter les communications entre deux machines afin de les espionner ou de les modifier à l'insu des deux parties.
+
+> Le protocole RARP est l'inverse du protocole ARP. Il permet de trouver l'adresse IP d'un hôte sur le réseau local à partir de son adresse MAC.
+
+### Protocole TTL: Time to live
+
+- Détermine le nombre de routeurs qu'un paquet peut traverser avant d'être détruit.
+
+- Permet d'éviter qu'un paquet circule sur le réseau indéfiniment.
+
+- La RFC 1700 recommande une valeur de 64 pour le TTL.
+
+- Les outils pour forger des paquets peuvent utiliser des TTL différents que l'OS.
+    - Exemples:
+        - Windows: 128
+        - Linux: 64
+        - MacOS: 255
+        - Windows95: 32
+
+- Le programme traceroute utilise le TTL pour déterminer le chemin qu'un paquet prend pour atteindre sa destination.
+    - Envoi des paquets avec des TTL croissants
+    - Lorsqu'un routeur décrémente le TTL à 0, il envoie un message ICMP 11 "Time Exceeded" à la source pour le lui signifier.
+    - De cette façon, la source peut ainsi connaître le premier retour, puis le deuxieme, etc.
+
+### Protocole ICMP
+- Internet Control Message Protocol.
+- Protocole de couche réseau
+- Permet l'envoi de messages de contrôle et d'erreur.
+- Permet de tester la connectivité IP.
+- La commande ping utilise le protocole ICMP.
+    - ping: Packet Internet Groper
+        - Permet de savoir si une machine est accessible sur le réseau
+        - Permet de mesurer le temps d'aller-retour d'un paquet à cette machine (RTT: Round Trip Time)
+
+![](/images/pratique/ICMP-Header-Format.png)
+
+### Protocole DNS
+
+- Domain Name Service/System
+- Associe un nom de domaine à une adresse IP
+- Utile pour ne pas avoir à retenir les adresses IP des sites web.
+- Idée: Associer une adresse IP malicieuse à un nom de domaine qui ne nous appartient pas.
+    - Fonctionnement: Une faille du protocole DNS permet de faire croire à un routeur/serveur que l'adresse IP associée à un nom de domaine stock dans son cache a changé.
