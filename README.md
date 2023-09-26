@@ -17,6 +17,10 @@
         - [Architecture TCP/IP](#architecture-tcpip)
         - [Encapsulation](#encapsulation)
     - [Chapitre 2: Couche physique](#chapitre-2-couche-physique)
+        - [Bases théoriques](#bases-théoriques)
+        - [Couche physique](#couche-physique)
+        - [Analyse de Fourier](#analyse-de-fourier)
+        - [Limitations](#limitations)
 - [Section Pratique](#section-pratique)
     - [Protocoles](#protocoles)
         - [Protocole Ethernet II](#protocole-ethernet-ii)
@@ -42,7 +46,9 @@ Les notes de cours suivantes sont pour le cours GLO-2000. Seulement les informat
 **LAN: Local Area Network**\
 **G: Gateway**\
 **PAN: Personal Area Network**\
-**MAN: Réseaux métropolitains**
+**MAN: Réseaux métropolitains**\
+**ETTD : Équipement Terminal de Transmission de Données**\
+**ETCD : Équipement Terminal de Circuit de Données**
 
 ### Schéma
 
@@ -302,7 +308,178 @@ des protocoles de communication différents et incompatibles.
     - Paquet: Adresse réseau/logique (IP)
 
 ## Chapitre 2: Couche physique
-...
+
+### Bases théoriques
+
+**Éléments de transport d'information**
+
+![](/images/ch2/transportinfo.png)
+- ETTD : Équipement Terminal
+de Transmission de Données
+    - Exemple: ordinateur
+- ETCD : Équipement Terminal
+de Circuit de Données
+    - Exemple: modem
+- Support ou canal de
+transmission :
+    - Exemple:Coaxial, Fibre optique ...
+
+![](/images/ch2/exempletransportinfo.png)
+
+#### Exemple d'accès à internet
+
+![](/images/ch2/Screenshot%20from%202023-09-25%2019-00-34.png)
+
+### Couche physique
+
+- La couche physique est la couche la plus basse du modèle OSI. Elle est censée définir les moyens:
+    1. mécaniques;
+    2. électriques;
+    3. fonctionnels.
+
+    Permettant:
+    1. d'établir;
+    2. de maintenir;
+    3. et de libérer
+    
+    Une connexion entre un ETTD et un ETCD.
+
+### Analyse de Fourier
+
+- Théorème: Toute fonction g(t) périodique de période T peut être décomposée de la manière suivante:
+
+    ![](/images/ch2/fourier.png)
+
+    - f=1/T: fréquence fondamentale (de base)
+    - an, bn: amplitudes harmoniques
+
+- Exemple: signal rectangulaire
+    
+    ![](/images/ch2/rectangulaire.png)
+    - n: nombre d'harmoniques
+
+- Transmission du caractère b codé en ASCII (01100010)
+
+    ![](/images/ch2/Screenshot%20from%202023-09-25%2019-17-06.png)
+
+### Limitations
+
+- L’analyse de Fourrier permet de comprendre les origines de certaines perturbations de signaux durant leur transmission.
+    - Limitation du canal de transmission: incapable de trasmettre toutes les harmoniques -> déformation du signal.
+    - Distortion temporelle: toutes les composantes harmoniques d'un signal ne se propagent pas à la même vitesse.
+- Autres limitations
+    - Atténuation: correspond à une perte d'énergie du signal lors de sa propagation.
+    - Bruit: des signaux indésirables qui s'ajoutent au signal transmis.
+
+### Limitations: bande passante
+
+- Bande passante d'un support: c'est la gramme de fréquences transmises sans affaiblissement par un support de trasmission. Si [f1, f2] est la bande passante, alors la largeur de bande est W = f2-f1.
+
+- Observations:
+    - On suppose qu'on envoie  un caractère avec une vitesse de b bit/s. On suppose également qu'on envoie le mête caractère plusieurs fois (T = 8*Tb avec Tb = durée d'un bit).
+    - T = 8*Tb = 8/b secondes -> fréquence de base f = f1 = 1/T = b/8 Hz et fn = nf1
+    - Nombre d'harmoniques = W/f
+    - Si on utilise une ligne téléphonique qui ne laisse passer que les fréquences entre 300 et 3400 Hz, on aura les résultats:
+    
+        ![](/images/ch2/results.png)
+
+>Remarques
+>- Il y a un lien direct entre le débit et la bande passante -> il y a une limitation.
+>- À partir de la vitesse 38 400bps, on aura aucune chance de reconstruire le signal
+>- Si on envoie la séquence 10101010... (le pire scénario), on aura T=2*Tb.
+>- Si T (up) alors f (down) et, dans ce cas, on aura besoin d’une bande passante moins large.
+
+### Débit maximal
+
+- Amélioration du débit
+    - Utiliser plusieurs niveaux du signal
+        - Exemple (V1, V2, V3, V4): V1 -> 00; V2 -> 01; V3 -> 10; V4 -> 11
+        > Remarques:
+        > - Baud = le nombre maximal de transitions par unité de temps.
+        > - Débit = le nombre de bits enovyés par seconde
+- Rapidité de modulation
+    - Rm = 1/2Tb bauds
+    - Débit = Rm * log2(V) bits/s
+    - V: Valence du signal (nombre de niveaux)
+    - V = 2 exposant p
+    - p = nombre de bits par niveau
+    - D = Rm * p
+- Débit maximal:
+    - Théorème de Nyquist:
+        - Hypothèse: le signal n'est affecté par aucun bruit.
+        - Débit maximal = **2 H Log2(V)**
+            - la largeur de bande
+            - V: nombre de niveaux du signal
+    - Théorème de Shannon:
+        - En présence de bruit, le débit maximal est donné par la formule:
+            - Débit maximal = **Log2(1+S/R)**
+                - S: puissance du signal
+                - R: puissance du bruit
+    - Conversion Decibels (dB):
+        - dB = 10 log10 (S/R)
+        - S: puissance du signal
+        - R: puissance du bruit
+
+### Techniques de transmission
+
+- Encodage de données (Transmission en bande de base)
+    - Code tout ou rien: 0 -> -V; 1 -> +V
+    - Code NRZ (Non Return to Zero): 0 -> -V; 1 -> +V
+    - Code bipolaire: 0 -> 0; 1 -> +V ou -V
+    - Code RZ (Return to Zero): 0 -> -V; 1 -> +V
+    - Code Manchester: 0 -> -V; 1 -> +V
+    - Code Miller: 0 -> -V; 1 -> +V
+
+- Modulation: Modifier (moduler) un ou plusieurs paramètres d'une onde porteuse en fonction du rythme des signaux binaires à transmettre.
+    - Porteuse: Vp(t) = Ap cos(2pifpt + 0p)
+    - Paramètres de la porteuse: Ap, fp, et 0p
+    - 4 types de modulation:
+        - Modulation d'amplitude (modifier Ap)
+        - Modulation de fréquence (modifier fp)
+        - Modulation de phase (modifier 0p)
+        - Modulation combinée (modifier plusieurs paramètres à la fois)
+    - 0 = 2pi / V
+
+    ![](/images/ch2/transmission.png)
+
+### Modes de transmission
+
+- Unidirectionnelles (simplex): Les données sont transmises dans une seule direction. Exemple: radio, télévision.
+- Bidirectionnelles en alternance (half-duplex): Les données sont transmises dans les deux directions, mais pas simultanément. Exemple: radio amateur, radio de police.
+- Bidirectionnelles simultanées (full-duplex): Les données sont transmises dans les deux directions simultanément. Exemple: téléphone, réseau téléphonique.
+- Série: les bits sont transmis un à la fois sur un seul fil.
+- Parallèle: les bits sont transmis simultanément sur plusieurs fils.
+
+### Commutation de circuits
+
+- Caractéristiques
+    - Utilisation exclusive du chemin après connexion.
+    - Monopole des liaisons composant le chemin
+    - libération des liaisons après l'échange (déconnexion)
+- Avantages
+    - livraison séquentielle des messages
+- Inconvénients
+    - Mal adaptée au transports de données
+
+### Commutation de messages
+
+- Aucun chemin n'est préalablement établi entre l'émetteur et le récepteur.
+
+- Le message transite d'un noeud à l'autre où il est inspecté, puis gardé en mémoire jusqu'à ce qu'une liaison vers le prochain noeud se libère, d'où son appelation _store_ and _forward_
+
+![](/images/ch2/Screenshot%20from%202023-09-25%2020-59-11.png)
+
+- Caractéristiques
+    - Contrôle d'erreur à chaque noeud
+    - Pas de monopole de chemin
+    - Acheminement par étape du message au complet
+- Avantages
+    - Meilleure utilisation des liaisons et des ressources du réseau
+- Inconvénients
+    - Nécessité de grandes capacités de mémoire aux noeuds
+    - Possibilité de saturation des liaisons par des messages de grande taille
+    - Pénalisation des messages courts
+
 
 # Section Pratique
 
