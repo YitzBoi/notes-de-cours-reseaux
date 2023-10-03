@@ -4,6 +4,7 @@
 
 [Pre-read](#pre-read)\
 [Équations](#équations)\
+[Division Binaire](#division-binaire)\
 [Mots clés](#mots-clés)\
 [Schéma](#schéma)
 - [Section Théorique](#section-théorique)
@@ -21,6 +22,16 @@
         - [Couche physique](#couche-physique)
         - [Analyse de Fourier](#analyse-de-fourier)
         - [Limitations](#limitations)
+        - [Limitations: bande passante](#limitations-bande-passante)
+        - [Débit maximal](#débit-maximal)
+    - [Chapitre 3: Couche liaison de données](#chapitre-3-couche-liaison-de-données)
+        - [Fonctions de la couche Liaison de données](#fonctions-de-la-couche-liaison-de-données)
+        - [Trame](#trame)
+        - [Délimitation de trames](#délimitation-de-trames)
+        - [Détection et correction d'erreurs](#détection-et-correction-derreurs)
+        - [Contrôle de flux](#contrôle-de-flux)
+        - [Partage du support physique](#partage-du-support-physique)
+        - [Protocoles de liaison de données](#protocoles-de-liaison-de-données)
 - [Section Pratique](#section-pratique)
     - [Protocoles](#protocoles)
         - [Protocole Ethernet II](#protocole-ethernet-ii)
@@ -37,6 +48,12 @@ Les notes de cours suivantes sont pour le cours GLO-2000. Seulement les informat
 ### Équations
 
 **% Données nettes** = Total Données nettes(TDN) / TDN + Total Header + Total Enqueue
+
+### Division Binaire
+
+1. Mettre le diviseur en dessous
+2. Différent = 1, Même = 0
+3. On continue
 
 ### Mots clés
 
@@ -480,6 +497,149 @@ transmission :
     - Possibilité de saturation des liaisons par des messages de grande taille
     - Pénalisation des messages courts
 
+## Couche liaison de données
+_Au niveau du WAN_
+### Fonctions de la couche Liaison de données
+Cette couche permet essentiellement:
+
+- Le formatage des données
+    - le flot de bits entrant doit être segmenté en trames.
+    - le début et la fin de chaque bloc doivent être clairement identifiés
+- Le contrôle des erreurs: Le protocole doit fournir:
+    - Une technique permettant la détection des erreurs.
+    - La possibilité de retransmission des trames dans le cas ou les erreurs ne peuvent pas être corrigées.
+- Le contrôle de flux: Le protocole doit fournir des mécanismes pour s'assurer que l'émetteur ne transmette pas plus vite que ce que peut absorber le récepteur.
+- Partage du support physique
+
+### Trame
+- Le flot de bits entrant doit être segmenté en blocs appelés trames.
+- Pourquoi?
+    - Si une erreur se produit lors de la transmission, l'unité de retransmission sera la trame (au lieu de retransmettre toute
+    l’information, on renvoie simplement une trame).
+- Problème: Comment alors délimiter une trame?
+
+### Délimitation de trames
+- Compter les caractères: Ajouter un caractère dans l'en-tête d'une trame indiquant le nombre de caractères qu'elle contient.
+    - **Inconvénient:** Si, lors de la transmission, une erreur se produit dans le champ indiquant le nombre de caractères, le récepteur ne serait plus capable de délimiter correctement les trames.
+- Ajouter des caractères de début de trame, de fin de trame et de transparence
+    - Début de trame = DLE STX (Data Link Escape, Start of Text)
+    - Fin de trame = DLE ETX (Data Link Escape, End of Text)
+    - Pour éviter que la séquence DLE STX ou DLE ETX ne se
+    retrouve parmi les données à envoyer, on ajoute un caractère DLE devant tout caractère DLE apparaissant dans les données à transmettre.
+    - **Inconvénient:** Les séquence de bits associées aux délimiteurs de trames dépendent du mécanisme de codage de caractère utilisé.
+- Utiliser des fanions et des bits de transparence:
+    - début de trame = 01111110 (fanion)
+    - fin de trame = 01111110 (fanion)
+    
+    - Pour évtier qu'un fanion ne se retrouve parmi les données à envoyer. Plus précisément, on insère un bit de 0 après chaque séquence de 5 bits de 1 consécutifs.
+
+### Détection et correction d'erreurs
+
+- Erreur de transmission: i {1,2, …}| âi – ai  0.
+- Taux d’erreur binaire : Le nombre de bits erronés sur le nombre total de bits reçus pendant un intervalle de temps.
+- Les codes détecteurs:
+    - Détecter des erreurs
+    - Ajouter aux données transmises des informations de contrôle
+    - Une fois qu'une erreur est détectée, on demande la retransmission de la trame erronée.
+- Détection par parité verticale (VRC: Vertical Redundancy Check):
+    - Information utile = b1.b2....bn
+    - Contrôle
+        - Parité paire = 0, si b1 + b2 + ... + bn est pair (1 sinon)
+        - Parité impaire = 0, si b1 + b2 + ... + bn est impair (1 sinon)
+    - Information de contrôle = 1 bit
+    - Cette méthode permet de détecter des blocs qui contiennent un nombre impair de bits éronnés
+    - Si les erreurs se produisent en rafales (un bloc peut comporter plusieurs bits éronnés), il y aura une chance sur 2 que cette erreur soit détectée.
+- Détection par parité longitudinale (LRC: Longitudinal Redundancy Check)
+    - Regrouper les données sous forme de blocs pour effectuer un codage VRC pair selon les lignes et les colonnes.
+    - Message à envoyer:
+        - HELLO! = 01001000 01000101 01001100 01001100 01001111 00100001
+    - Message transmis: 10010000 10001011 10011001 10011001 10011111 01000010 11000110
+    - Cette méthode permet de détecter toutes les erreurs simples, doubles ou triples.
+- Détection par code cyclique (CRC: Cyclic Redundancy Check)
+    - Connu aussi sous le nom de codes polynomiaux.
+    - Principe:
+        - L'émetteur et le récepteur se mettent d'accord sur un diviseur. Exemple: 
+        - Information de contrôle = le reste de la division de message sur diviseur
+            - Message 57268
+            - Contrôle = Reste(57268/84) = 64
+            - Message transmis 5726864
+
+![](/images/ch3/Screenshot%202023-10-02%20at%2019-47-54%20Présentation%20PowerPoint%20-%20Liaison_A2023.pdf.png)
+
+- CRC (méthode alternative)
+    - Avant la communication:
+        - Pour un message de k bits, l’émetteur et le récepteur se
+        mettent d’accord sur un polynôme générateur G(x) de degré r
+        tel que r <= k - 1.
+- Algorithme:
+    - Ajouter r bits « 0 » au message M pour former M’. M’ contient
+    (k + r) bits.
+    - Effectuer la division binaire (M’/G). Le CRC correspond au
+    reste de cette division.
+    - Ajouter les bits du CRC à M pour former un nouveau message T.
+    - Soit T’ le message reçu. À la réception, si le reste de la division
+    binaire (T’/G) est non nul, il y a erreurs de transmission.
+
+### Protocoles élémentaires
+
+- Envoyer et attendre (Stop and Wait):
+    - Hypothèses:
+        - Les données utiles circulent dans un seul sens
+        - Les trames envoyées contiennent l'information nécessaire (CRC par exemple) pour que le récepteur puisse détecter les erreurs éventuelles
+    - Côté récepteur:
+        - Si la trame reçue ne contient pas d'erreur, il envoie un message d'acquittement (ACK) à l'émetteur.
+        - Si la trame reçue contient une erreur, il n'envoie rien à l'émetteur.
+    - Côté émetteur:
+        - Il envoie une trame et il attend une durée de temps fixe t (timeout) (t >= au temps requis pour qu'une trame fasse un aller retour).
+        - Si au bout de t unité de temps, il ne reçoit pas un acquittement ACK, il retransmet la trame.
+    - Avantages:
+        - Simplicité: Facile à comprendre et à implanter.
+        - Il ne demande pas beaucoup de mémoire : Le récepteur
+        utilise un tampon qui peut contenir une seule trame.
+        - Contrôle de flux : L’émetteur n’envoie pas plus que ce
+        que le récepteur peut traiter. Il envoie une trame et il
+        s’assure qu’elle a été traitée par le récepteur avant
+        d’envoyer la suivante.
+    - Inconvénients :
+        - Les données utiles circulent dans un seul sens.
+        - Le canal de transmission n’est pas exploité comme il faut.
+        Durant à peu près la moitié du temps, l’émetteur chôme.
+
+![](/images/ch3/Screenshot%202023-10-02%20at%2020-32-20%20Présentation%20PowerPoint%20-%20Liaison_A2023.pdf.png)
+
+#### Problème:
+Si l'acquittement d'une trame(n) est perdu, l'émetteur va la retransmettre, mais le récepteur va la considérer comme une nouvelle trame (n+1) et va l'accepter. On aura donc deux trames identiques.
+
+#### Solution: 
+Il suffit de numéroter les trames pour résoudre le problème précédent. À cette fin, on va ajouter un champ dans l'en-tête de chaque trame pour mettre leurs numéros. 
+
+> La seule ambiguïté du coté de
+récepteur est de savoir s’il s’agit de la trame
+précédente ou d’une nouvelle trame, donc un
+seul bit suffira pour la numérotation des
+trames. La première trame porte le numéro 0,
+la deuxième 1, la troisième 0, la quatrième 1,
+etc. 
+
+![](/images/ch3/Screenshot%202023-10-02%20at%2020-36-34%20Présentation%20PowerPoint%20-%20Liaison_A2023.pdf.png)
+
+#### Robustesse
+Avec le protocole précédent, si l'émetteur ne règle pas convenablement son temporisateur (plus petit que la valeur convenable), il y aura la possibilité que le récepteur rejette des trames en les croyant des retransmissions
+
+![](/images/ch3/Screenshot%202023-10-02%20at%2020-39-57%20Présentation%20PowerPoint%20-%20Liaison_A2023.pdf.png)
+
+#### Protocole plus robuste:
+On veut
+un protocole qui fonctionne
+convenablement même si
+l’émetteur ne règle pas
+convenablement son
+temporisateur.
+
+#### Solution:
+Numéroter les acquittements
+
+![](/images/ch3/Screenshot%202023-10-02%20at%2020-43-48%20Présentation%20PowerPoint%20-%20Liaison_A2023.pdf.png)
 
 # Section Pratique
 
