@@ -32,6 +32,7 @@
         - [Contrôle de flux](#contrôle-de-flux)
         - [Partage du support physique](#partage-du-support-physique)
         - [Protocoles de liaison de données](#protocoles-de-liaison-de-données)
+    - [Chapitre 4: MAC](#chapitre-4-MAC)
 - [Section Pratique](#section-pratique)
     - [Protocoles](#protocoles)
         - [Protocole Ethernet II](#protocole-ethernet-ii)
@@ -640,6 +641,81 @@ temporisateur.
 Numéroter les acquittements
 
 ![](/images/ch3/Screenshot%202023-10-02%20at%2020-43-48%20Présentation%20PowerPoint%20-%20Liaison_A2023.pdf.png)
+
+#### Rejet sélectif
+
+- Cette stratégie consiste à ignorer seulement les
+trames erronées.
+
+- Les trames correctement reçues après une
+erreur seront toutes stockées
+
+- Une fois, la trame erronée est retransmise, la
+couche liaison réceptrice remet les paquets à
+sa couche supérieure dans le bon ordre.
+
+Go back N : W <= 2^m - 1
+
+Rejet Sélectif : W <= 2^(m-1)
+
+#### Exemple de protocole de couche de liaison
+
+- HDLC (High-Level Data Link Control)
+    - IBM développe le protocole SDLC (Synchronous
+    Data Link Control), l’utilise dans SNA et le
+    propose à l’ANSI comme norme pour les Etats-
+    Unis et à l’ISO comme norme internationale.
+    - L’ANSI a adopté ADCCP (Advanced Data
+    Communication Control Protocol)
+    - ISO a adopté HDLC
+    - CCITT de sa part adopte LAP (Link Access
+    Procedure) issue de HDLC
+    - Structure de trame HDLC
+        ![](/images/ch3/Screenshot%202023-10-16%20at%2019-02-08%20Présentation%20PowerPoint%20-%20Liaison_A2023.pdf.png)
+    - Trame d'information
+        - Trame transportant de l’information
+    - Trame de supervision
+        - Trame qui gère l’acquittement, le contrôle de flux et
+        indiquant l’état de la disponibilité de la station.
+        - Pas de champ « DONNÉES ».
+    - Trame non numérotée
+        - Trame dotée de fonctions complémentaires (initialisation,
+        libération, …)
+        - En général, pas de champ « DONNÉES ».
+
+## Chapitre 4: MAC
+_Contrôle d'accès au canal_
+### Introduction
+#### Ce chapitre
+_Ligne partagée par plusieurs utilisateurs_
+#### Problème/enjeu de se chapitre
+_Éviter les collisions_
+#### Constituants d'un LAN
+- Câblage d'interconnexion des noeuds;
+- Méthode d'accès pour assurer le partage de support de transmission;
+- Méthode d'adressage pour l'identification des noeuds;
+- Ensemble de protocoles pour permettre la communication;
+- Système d'exploitation réseau pour contrôler l'utilisation des périphériques distants;
+- Programmes utilisant les ressources mises en commun.
+
+### Problème d'allocation d'un canal
+#### Allocation dynamique
+- Principe:
+    - Un seul canal logique de communication est disponible pour toutes les communications.
+    - Lorsqu'une station a de l'information, elle l'envoie, sans se préoccuper des autres usagers.
+- S'il y a collision, les signaux seront retransmis ultérieurement.
+    - Avantages: 
+        - Ne nécessite aucune synchronisation
+        - Complètement décentralisée
+    - Inconvénients:
+        - Perte de l'information en cas de collision
+        - Lorsque le nombre d'utilisateurs augmente, le débit du système de vient plus faible.
+
+### Couche liaison dans un LAN
+- LLC: Logical Link Control
+- MAC: Medium Access Control
+
+![](/images/ch4/Screenshot_20231106_185055.png)
 
 # Section Pratique
 
