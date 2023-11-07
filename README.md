@@ -717,6 +717,42 @@ _Éviter les collisions_
 
 ![](/images/ch4/Screenshot_20231106_185055.png)
 
+### Protocoles de Gestion d'accès
+#### MAC
+Trois stratégies:
+1. La contention:
+    - une station émet quand elle veut.
+    - si collision -> Entreprendre une action.
+    - Utilisée par "Contention Systems" (systèmes qui partagent un canal selon une méthode qui peut conduire à des conflits).
+2. Technique Round-Robin:
+    - Chaque station attend son tour avant d'émettre en cycle.
+    - Utilisée par les Token-Based systems.
+3. Technique de réservation
+    - Demander la permission (de réserver le canal) avant d'émettre.
+    - Utilisée par les Slotted systems.
+
+#### Les protocoles CSMA (Carrier Sense Multiple Access)
+- Principe:
+    - Avant d'envoyer, s'assurer que le canal est libre (écouter le canal)
+- 1-persistant:
+    - si le canal est **occupé**, alors rester à l'écoute jusqu'à ce qu'il devienne libre
+- non-persistant:
+    - si le canal est **occupé**, alors attendre un temps aléatoire puis réécouter
+- p-persistant:
+    - si le canal est **libre**, alors envoyer avec une probabilité (0 <= p <= 1)
+##### CSMA avec détection de collision (CSMA/CD)
+- Fonctionnement: écouter le canal et arrêter la transmission dès qu'une collision est détectée.
+- Principe:
+    - Si le canal n'est pas libre, alors transmettre plus tard.
+    - Au cours de la transmission, écouter le canal.
+    - S'il y a une collision, alors on arrête tout de suite la transmission pour retransmettre plus tard.
+- Exemple de CSMA/CD:
+    ![](/images/ch4/Screenshot_20231106_191334.png)
+- Formules:
+    - Tx >= 2 * Tp
+    - L: Taille de la trame
+    - Tx = L / Tp
+
 # Section Pratique
 
 ## Protocoles
