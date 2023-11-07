@@ -804,6 +804,23 @@ Trois stratégies:
     - Checksum: Totale de contrôle. Détection d'erreurs basée sur un CRC
 
 ### Les ponts
+- Inter-Networking
+    - a) Couches implantées dans les équipements d'interconnexion
+    - b) Structure d'une trame
+![](/images/ch4/Screenshot_20231106_203640.png)
+- Définition: Un équipement permettant d'interconnecter plusieurs réseaux LAN.
+- Il intervient au niveau de la couche liaison, alors il n'analyse pas les paquets:
+- Pourquoi?
+    - Connecter plusieurs LAN différents (802.3, 802.4, 802.5, etc.) de différents départements d’une entreprise ou d’une organisation.
+    - Si une entreprise est géographiquement répartie sur plusieurs bâtiments séparés et distants, alors il peut être plus économique d’avoir des LAN distincts interconnectés.
+    - Diviser un LAN en plusieurs sous-LAN afin de diminuer la charge.
+    - La distance entre les machines les plus éloignées dépasse la limite (2,5 km pour 802.3).
+    - Fiabilité: Avoir plusieurs LAN à la place d’un seul augmente la fiabilité (un problème dans un LAN n’affectera pas toutes les stations).
+    - Sécurité: Un pont peut vérifier la source et la destination, et refuser de diffuser une trame (agir selon une politique de sécurité).
+-Fonctionnement: Il convertit principalement des trames d'un format à un autre.
+    ![](/images/ch4/Screenshot_20231106_204138.png)
+- Comparaison avec d'autres équipements d'interconnexion 
+    ![](/images/ch4/Screenshot_20231106_204440.png)
 
 # Section Pratique
 
