@@ -33,6 +33,11 @@
         - [Partage du support physique](#partage-du-support-physique)
         - [Protocoles de liaison de données](#protocoles-de-liaison-de-données)
     - [Chapitre 4: MAC](#chapitre-4-MAC)
+        - [Introduction](#introduction)
+        - [Problèmes d'allocation d'un canal](#problèmes-dallocation-dun-canal)
+        - [Couche liaison dans un LAN](#couche-liaison-dans-un-lan)
+        - [Protocoles de Gestion d'accès](#protocoles-de-gestion-daccès)- [Normes IEEE 802 des LAN](#normes-ieee-802-des-lan)
+        - [Les ponts](#les-ponts)
 - [Section Pratique](#section-pratique)
     - [Protocoles](#protocoles)
         - [Protocole Ethernet II](#protocole-ethernet-ii)
@@ -752,6 +757,53 @@ Trois stratégies:
     - Tx >= 2 * Tp
     - L: Taille de la trame
     - Tx = L / Tp
+
+### Normes IEEE 802 des LAN
+- Plusieurs normes pour la couche MAC:
+    - 802.3 (CSMA/CD)
+    - 802.4 (TOKEN BUS)
+    - 802.5 (TOKEN RING)
+    - 802.6 (DQDB)
+    - 802.9 (Integration Voice/Data)
+
+#### Norme IEEE 802.3
+##### Ethernet
+- Transmission en bande de base, codage Manchester;
+- Topologie en bus;
+- Méthode d'accès selon la norme IEEE 802.3;
+- Longeur de trames compromises entre minimum **64 octets** et maximum **1518 octets**;
+- Support de type coaxial, paire torsadée et fibre optique;
+- Basé sur CSMA/CD: écouter le canal tant qu'il est occupé, envoyer s'il est libre, arrêter la transmission et revenir plus tard si collision.
+![](/images/ch4/Screenshot_20231106_194832.png)
+>- 10 -> Vitesse de transmission;
+>- Base -> Bande de base;
+>- 2 -> spécificité du cable / longueur d'un segment.
+
+##### Ethernet classique
+![](/images/ch4/Screenshot_20231106_194515.png)
+
+##### Format d'une trame
+![](/images/ch4/Screenshot_20231106_195756.png)
+- Préambule: 7 fois la suite 10101010 pour synchroniser l'horloge de l'émetteur avec celle du récepteur
+- Start of frame delemiter: Pour dire que les informations utiles vont commencer
+- Address: Généralement 48 bits
+    - 3 premiers octets (00:00:00) = Manufacturier
+        - 00:00:0C = CISCO
+        - 08:00:5A = IBM
+    -SI:
+        - 1er bit (de gauche) de l'adresse destination = 0 -> adresse d'une seule machine (individuel)
+        - 1er bit (de gauche) de l'adresse destination = 1 -> adresse d'un groupe de machines (Groupe)
+        - Tous les bits de l'adresse destination = 1 -> diffusion
+        - 2e bit (de gauche) de l'adresse de destination pour dire s'il s'agit d'une adresse locale (attribuée par le gestionnaire du réseau) ou une adresse globale/unique (attribuée par IEEE -> unique au monde)
+- Données: minimum de 0 octets à 1500 octets
+- Length: Nombre d'octets dans le champ de données
+- Pad: des bits de remplissage pour avoir une longueur de la trame toujours > 64 octets
+    - 64 = [46 du champ pad + 18 (minimum du total des autres champs)]
+    - Cela permet d'éviter le cas qu'une station envoie une trame courte et quitte sans savoir s'il y a eu ou non une collision
+        ![](/images/ch4/Screenshot_20231106_201115.png)
+    - Checksum: Totale de contrôle. Détection d'erreurs basée sur un CRC
+
+### Les ponts
 
 # Section Pratique
 
